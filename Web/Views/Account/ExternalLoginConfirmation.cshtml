@@ -1,0 +1,35 @@
+﻿@model IdentitySample.Models.ExternalLoginConfirmationViewModel
+@{
+    ViewBag.Title = "Registracija";
+}
+<h2>@ViewBag.Title.</h2>
+<h3>Spajanje s @ViewBag.LoginProvider računom.</h3>
+
+@using (Html.BeginForm("ExternalLoginConfirmation", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <p class="text-info">
+       Uspješno ste se autentificirali uz pomoć <strong>@ViewBag.LoginProvider</strong>.
+        Molimo vas da unesete korisničko ime za ovu aplikaciju i pritisnite registriraj 
+        nakon toga za završetak prijave.
+    </p>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-default" value="Registriraj" />
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

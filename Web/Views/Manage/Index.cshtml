@@ -1,0 +1,65 @@
+﻿@model IdentitySample.Models.IndexViewModel
+@{
+    ViewBag.Title = "Upravljanje računom";
+}
+
+<h2>@ViewBag.Title.</h2>
+<p class="text-success">@ViewBag.StatusMessage</p>
+<div class="row">
+    <div class="col-md-8">
+        <p>
+            @if (Model.HasPassword)
+            {
+                @Html.ActionLink("Promijeni lozinku", "ChangePassword")
+            }
+            else
+            {
+                @Html.ActionLink("Odaberi lozinku", "SetPassword")
+            }
+        </p>
+        <p>
+            Vanjski sustavi za prijavu: @Model.Logins.Count
+            @Html.ActionLink("[Upravljaj]", "ManageLogins")
+        </p>
+        @if (Model.TwoFactor)
+        {
+            using (Html.BeginForm("DisableTFA", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                <p>
+                    2F je omogućen:
+                    <input type="submit" value="Onemogući" class="btn btn-default"/>
+                </p>
+            }
+        }
+        else
+        {
+            using (Html.BeginForm("EnableTFA", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                <p>
+                    2F je onemogućen:
+                    <input type="submit" value="Omogući" class="btn btn-default" />
+                </p>
+            }
+        }
+        @if (Model.BrowserRemembered)
+        {
+            using (Html.BeginForm("ForgetBrowser", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                <p>
+                    Preglednik je zapamćen i neće tražiti 2F:
+                    <input type="submit" value="Zaboravi preglednik" class="btn btn-default" />
+                </p>
+            }
+        }
+        else
+        {
+            using (Html.BeginForm("RememberBrowser", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                <p>
+                    Preglednik nije zapamćen i tražiti će 2F:
+                    <input type="submit" value="Zapamti preglednik" class="btn btn-default"/>
+                </p>
+            }
+        }
+    </div>
+</div>

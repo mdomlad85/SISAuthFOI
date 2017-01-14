@@ -1,0 +1,19 @@
+﻿@model System.Web.Mvc.HandleErrorInfo
+
+@{
+    ViewBag.Title = "Greška";
+}
+
+<hgroup>
+    <h1 class="text-error">Greška.</h1>
+    @{
+        if (String.IsNullOrEmpty(ViewBag.errorMessage))
+        {
+            <h2 class="text-danger">Došlo je do pogreške prilikom obrade zahtjeva.</h2>
+        }
+        else
+        {
+            <h2 class="text-danger">@ViewBag.errorMessage</h2>
+        }
+    }
+</hgroup>
